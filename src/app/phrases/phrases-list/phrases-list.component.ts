@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PHRASES } from '../shared/mock-data';
-import { Phrase } from '../shared/phrase.class';
-import { PhraseService } from '../shared/phrase.service';
+import { Router } from '@angular/router';
+import { PhraseService } from 'src/app/shared/phrase.service';
+import { Phrase } from 'src/app/shared/phrase.class';
 
 @Component({
   selector: 'app-phrases-list',

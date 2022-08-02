@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Phrase } from '../shared/phrase.class';
-import { PhraseService } from '../shared/phrase.service';
+import { Phrase } from 'src/app/shared/phrase.class';
+import { PhraseService } from 'src/app/shared/phrase.service';
 
 @Component({
   selector: 'app-phrase-details',
