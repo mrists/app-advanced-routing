@@ -22,7 +22,12 @@ a {
         transition: padding 0.25s;
         &:hover {
             background-color: crimson;
-            padding: 5px 1em ;
+            padding: 5px 1em;
+        }
+        &.selected {
+            background-color: lightskyblue;
+            padding: 5px 1em;
+            font-weight: bold;
         }
     }
 }

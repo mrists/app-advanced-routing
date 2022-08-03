@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PhraseService } from 'src/app/shared/phrase.service';
 import { Phrase } from 'src/app/shared/phrase.class';
 
@@ -10,21 +10,30 @@ import { Phrase } from 'src/app/shared/phrase.class';
 })
 export class PhrasesListComponent implements OnInit {
 
-  phrases!: Phrase[]
+  phrases!: Phrase[];
+  selectedID!: number
 
   constructor(
     private phraseservice: PhraseService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      this.selectedID = +params['id']
+    })
+
     this.phraseservice.getAllPhrases().then(res => {
       this.phrases = res;
     });
   }
 
+  isSelected(phrase: Phrase):boolean {
+    return this.selectedID === phrase.id
+  }
+
   onSelect(phrase: Phrase) {
-      console.log(phrase)
       this.router.navigate(['phrase', phrase.id]).then()    
     }
 }

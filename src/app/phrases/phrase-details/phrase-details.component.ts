@@ -19,7 +19,7 @@ export class PhraseDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.forEach((params) => {
+    this.activatedRoute.params.subscribe((params) => {
       const id = +params['id']
 
       if (isNaN(id)) return
@@ -29,8 +29,8 @@ export class PhraseDetailsComponent implements OnInit {
 
   }
 
-  goToPhrasesList() {
-    this.router.navigate(['/phrases']).then()
+  goToPhrasesList():void {
+    this.router.navigate(['/phrases', {id: this.phrase?.id}]).then()
   }
 
 }
