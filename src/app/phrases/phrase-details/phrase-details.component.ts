@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/shared/auth.service';
+import { CanComponentDeactivate } from 'src/app/shared/can-deactivate.guard';
 import { Phrase } from 'src/app/shared/phrase.class';
 import { PhraseService } from 'src/app/shared/phrase.service';
 
@@ -8,14 +11,17 @@ import { PhraseService } from 'src/app/shared/phrase.service';
   templateUrl: './phrase-details.component.html',
   styleUrls: ['./phrase-details.component.scss']
 })
-export class PhraseDetailsComponent implements OnInit {
+export class PhraseDetailsComponent implements OnInit, CanComponentDeactivate {
 
   phrase!: Phrase | undefined
+  editValue!: string
+  editLanguage!: string
 
   constructor(
     private phraseservice: PhraseService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -24,7 +30,13 @@ export class PhraseDetailsComponent implements OnInit {
 
       if (isNaN(id)) return
 
-      this.phraseservice.getPhrase(id).then(res => this.phrase = res);
+      this.phraseservice.getPhrase(id).then(res => {
+        this.phrase = res
+        if (this.phrase) {
+          this.editValue = this.phrase.value
+          this.editLanguage = this.phrase.language
+        }
+      });
     })
 
   }
@@ -33,4 +45,20 @@ export class PhraseDetailsComponent implements OnInit {
     this.router.navigate(['/phrases', {id: this.phrase?.id}]).then()
   }
 
+  save(): void {
+    if (this.phrase) {
+      this.phrase.value = this.editValue
+      this.phrase.language = this.editLanguage
+    }
+  }
+
+  isChanged(): boolean {
+    return !(this.phrase?.value === this.editValue && this.phrase.language === this.editLanguage)
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if(!this.phrase) return true
+    if(!this.isChanged()) return true
+    return confirm('Вы не сохранили данные. \nДанные будут утеряны. \nУйти со страницы в любом случае?')
+  }
 }
