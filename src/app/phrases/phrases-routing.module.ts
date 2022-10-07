@@ -8,14 +8,14 @@ import { PhrasesListComponent } from './phrases-list/phrases-list.component';
 
 const routes: Routes = [
   {path: 'phrases', component: PhraseHomeComponent, 
-  children: [{path: '', component: PhrasesListComponent,
-  children: [
-    {
-    path: ':id',
-    component: PhraseDetailsComponent,
-    canDeactivate: [CanDeactivateGuard],
-    resolve: {phrase: PhraseDetailsResolver}
-  }]}]}
+    children: [{path: '', component: PhrasesListComponent,
+                children: [{path: ':id', component: PhraseDetailsComponent,
+                          canDeactivate: [CanDeactivateGuard],
+                          resolve: {phrase: PhraseDetailsResolver}}
+                          ]
+              }
+              ]
+  }
 ]
 
 @NgModule({

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { CanComponentDeactivate } from 'src/app/shared/can-deactivate.guard';
 import { Phrase } from 'src/app/shared/phrase.class';
-import { PhraseService } from 'src/app/shared/phrase.service';
 
 @Component({
   selector: 'app-phrase-details',
@@ -18,7 +17,6 @@ export class PhraseDetailsComponent implements OnInit, CanComponentDeactivate {
   editLanguage!: string
 
   constructor(
-    private phraseservice: PhraseService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public authService: AuthService

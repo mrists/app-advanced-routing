@@ -33,8 +33,8 @@ export class PhrasesListComponent implements OnInit {
     return this.selectedID === phrase.id
   }
 
-  onSelect(phrase: Phrase) {
-      this.router.navigate(['phrases', phrase.id]).then()    
+  onSelect({id}: Phrase) {
+      this.router.navigate(['phrases', id]).then()    
     }
 }
 
